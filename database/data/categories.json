@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "name": "Electrical And Electronic",
+    "slug": "electrical-and-electronic",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "has_products": null,
+    "level_id": 1,
+    "parent_id": null
+  },
+  {
+    "id": 2,
+    "name": "Wiring Devices",
+    "slug": "wiring-devices",
+    "description": "",
+    "has_products": null,
+    "level_id": 2,
+    "parent_id": 1
+  },
+  {
+    "id": 3,
+    "name": "Straight Blade Devices",
+    "slug": "straight-blade-devices",
+    "description": "",
+    "has_products": null,
+    "level_id": 3,
+    "parent_id": 2
+  },
+  {
+    "id": 4,
+    "name": "SnapConnect Receptacles",
+    "slug": "snapconnect-receptacles",
+    "description": "",
+    "has_products": 1,
+    "level_id": 4,
+    "parent_id": 3
+  },
+  {
+    "id": 5,
+    "name": "Wire/Cable/Hose Management",
+    "slug": "wirecablehose-management",
+    "description": "",
+    "has_products": null,
+    "level_id": 2,
+    "parent_id": 1
+  },
+  {
+    "id": 6,
+    "name": "Wire Mesh Grips",
+    "slug": "wire-mesh-grips",
+    "description": "",
+    "has_products": null,
+    "level_id": 3,
+    "parent_id": 5
+  },
+  {
+    "id": 7,
+    "name": "Support Grips",
+    "slug": "support-grips",
+    "description": "",
+    "has_products": 1,
+    "level_id": 4,
+    "parent_id": 6
+  }
+]
