@@ -37,6 +37,6 @@ class Product extends Model
     }
 
     public function resources(){
-        return $this->morphToMany('App\Models\Resource', 'resourceable');
+        return $this->hasMany('App\Models\Resource', 'product_id');
     }
 }

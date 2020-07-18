@@ -153,6 +153,20 @@ class RoleHelper
                     'super',
                     'admin'
                 ])
+            ],
+            'shops' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ])
             ]
         ];
 

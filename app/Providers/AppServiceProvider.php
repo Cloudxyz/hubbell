@@ -52,6 +52,16 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\ImagesRepositoryInterface::class,
             \App\Repositories\ImagesRepository::class
         );
+
+        $this->app->bind(
+            \App\Repositories\ResourcesRepositoryInterface::class,
+            \App\Repositories\ResourcesRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\ShopsRepositoryInterface::class,
+            \App\Repositories\ShopsRepository::class
+        );
     }
 
     /**

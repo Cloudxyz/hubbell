@@ -33,9 +33,9 @@
     </label>
 
     <div class="col-sm-10">
-        <textarea 
+        <textarea
             name="{{ $inputName }}"
-            class="form-control" 
+            class="form-control"
             rows="{{ $rows }}"
             id="{{ $id }}"
             style="{{ $resizeStyle }}"

@@ -3,12 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\Image;
+use App\Models\Resource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Repositories\ProductsRepositoryInterface;
 use App\Validations\ProductsValidations;
-use App\Helpers\ImagesHelper;
+use App\Helpers\{
+    ImagesHelper,
+    ResourcesHelper
+};
 
 class ProductsRepository implements ProductsRepositoryInterface
 {
@@ -121,6 +125,24 @@ class ProductsRepository implements ProductsRepositoryInterface
                 }
 
             }
+            if($request->section_resource){
+                foreach ($request->section_resource as $sectionResource){
+                    if(!array_key_exists('resource', $sectionResource)){
+                        continue;
+                    }
+                    $resourceData = ResourcesHelper::saveFile($sectionResource['resource'][0], 'resources');
+                    $resource = new Resource;
+                    $resource->title_section = $sectionResource['title'][0];
+                    $resource->slug = $resourceData['slug'];
+                    $resource->extension = $resourceData['extension'];
+                    $resource->file_original_name = $resourceData['file_original_name'];
+                    $resource->file_name = $resourceData['file_name'];
+                    $resource->file_path = $resourceData['file_path'];
+                    $resource->file_url = $resourceData['file_url'];
+                    $resource->product_id = $product->id;
+                    $resource->save();
+                }
+            }
 
             /*if (!empty($request->resources)) {
                 $product->resources()->create(['resources' => $request->resources]);
@@ -152,6 +174,10 @@ class ProductsRepository implements ProductsRepositoryInterface
                 ImagesHelper::deleteFile($image['file_path']);
                 ImagesHelper::deleteThumbnails($image['file_path']);
                 $product->images()->detach($image['id']);
+            }
+            foreach($product->resources()->get() as $resource){
+                $resource->delete();
+                ResourcesHelper::deleteFile($resource['file_path']);
             }
             $product->delete();
         }

@@ -26,7 +26,11 @@ class CreateResourcesTable extends Migration
             $table->string('file_name')->nullable();
             $table->text('file_path')->nullable();
             $table->text('file_url')->nullable();
-            $table->smallInteger('order')->nullable();
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('products')
+                ->onDelete('cascade')->onUpdate('cascade');
+
+            $table->timestamps();
         });
     }
 

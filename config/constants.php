@@ -14,6 +14,10 @@ return [
     ],
 
     'thumbnails' => [
+        'tiny' => [
+            'width' => 50,
+            'height' => 50,
+        ],
         'thumbnail' => [
             'width' => 150,
             'height' => 150,

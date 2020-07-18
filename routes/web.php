@@ -31,6 +31,19 @@ Route::group(['middleware' => ['web']], function () {
             });
         });
 
+        // shops
+        Route::group(['prefix' => 'shops'], function () {
+            Route::group(['middleware' => 'role-permission:my-shops,index'], function() {
+                Route::get('', 'ShopsController@index')->name('shops');
+                Route::get('create', 'ShopsController@create')->name('shops.create');
+                Route::post('store', 'ShopsController@store')->name('shops.store');
+                Route::get('show/{shop}', 'ShopsController@show')->name('shops.show');
+                Route::get('edit/{shop}', 'ShopsController@edit')->name('shops.edit');
+                Route::post('update/{id}', 'ShopsController@update')->name('shops.update');
+                Route::get('destroy/{id}', 'ShopsController@destroy')->name('shops.destroy');
+            });
+        });
+
         // products prefix
         Route::group(['prefix' => 'products'], function () {
 
@@ -62,6 +75,11 @@ Route::group(['middleware' => ['web']], function () {
         // images
         Route::group(['prefix' => 'images'], function () {
             Route::get('destroy/{model}/{id}/{type}', 'ImagesController@destroy')->name('images.destroy');
+        });
+
+        // images
+        Route::group(['prefix' => 'resources'], function () {
+            Route::get('destroy/{model}/{id}/{type}', 'ResourcesController@destroy')->name('resources.destroy');
         });
 
         // settings

@@ -27,7 +27,7 @@ mix.combine(
         "public/assets/styles/vendor/perfect-scrollbar.css",
         "public/assets/styles/vendor/fastselect.min.css",
         "public/assets/styles/vendor/dropzone.min.css",
-        "public/assets/styles/vendor/jquery-ui.min.css",
+        "public/assets/styles/vendor/jquery-ui.min.css"
     ],
     "public/css/vendor.css"
 );
@@ -40,7 +40,7 @@ mix.combine(
         "resources/gull/assets/js/vendor/bootstrap.bundle.min.js",
         "resources/gull/assets/js/vendor/perfect-scrollbar.min.js",
         "public/assets/js/vendor/fastselect.standalone.js",
-        "public/assets/js/vendor/dropzone.min.js",
+        "public/assets/js/vendor/dropzone.min.js"
     ],
     "public/assets/js/common-bundle-script.js"
 );

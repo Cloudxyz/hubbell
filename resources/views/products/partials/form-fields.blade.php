@@ -56,15 +56,13 @@
         ])
 
         <!-- resources -->
-        @include('components.form.file', [
+        @include('components.form.resource', [
             'group' => 'product',
             'label' => __('Resources'),
             'name' => 'resources',
-            'isMultiple' => true,
-            'fileName' => $row->file_original_name,
-            'filePath' => $row->file_path,
-            'fileUrl' => $row->file_url,
-            'fileExtension' => $row->extension,
+            'modelId' => $row->id,
+            'modelType' => 'products',
+            'files' => $row->resources()->get(),
         ])
 
         <!-- images -->

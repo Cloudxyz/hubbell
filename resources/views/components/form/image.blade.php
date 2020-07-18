@@ -25,28 +25,32 @@
     $readOnlyProp = ($readOnly) ? ' readonly ' : '';
     $multipleProp = $isMultiple ? ' multiple ' : '';
 
-    foreach ($files as $index => $file){
-        $orderFiles[$index]['id'] = $file->id;
-        $orderFiles[$index]['slug'] = $file->slug;
-        $orderFiles[$index]['extension'] = $file->extension;
-        $orderFiles[$index]['file_original_name'] = $file->file_original_name;
-        $orderFiles[$index]['file_name'] = $file->file_name;
-        $orderFiles[$index]['file_path'] = $file->file_path;
-        $orderFiles[$index]['file_url'] = $file->file_url;
-        $orderFiles[$index]['order'] = $file->order;
-    }
+    $orderFiles = [];
 
-    function sort_array_of_array(&$array, $subfield){
-        $sortarray = array();
-        foreach ($array as $key => $row)
-        {
-            $sortarray[$key] = $row[$subfield];
+    if($files){
+        foreach ($files as $index => $file){
+            $orderFiles[$index]['id'] = $file->id;
+            $orderFiles[$index]['slug'] = $file->slug;
+            $orderFiles[$index]['extension'] = $file->extension;
+            $orderFiles[$index]['file_original_name'] = $file->file_original_name;
+            $orderFiles[$index]['file_name'] = $file->file_name;
+            $orderFiles[$index]['file_path'] = $file->file_path;
+            $orderFiles[$index]['file_url'] = $file->file_url;
+            $orderFiles[$index]['order'] = $file->order;
         }
 
-        array_multisort($sortarray, SORT_ASC, $array);
-    }
+        function sort_array_of_array(&$array, $subfield){
+            $sortarray = array();
+            foreach ($array as $key => $row)
+            {
+                $sortarray[$key] = $row[$subfield];
+            }
 
-    sort_array_of_array($orderFiles, 'order');
+            array_multisort($sortarray, SORT_ASC, $array);
+        }
+
+        sort_array_of_array($orderFiles, 'order');
+    }
 
 
 @endphp
@@ -83,7 +87,7 @@
         </div>
 
         @if ($hasFiles)
-            <div id="sortable"  class="app-file-wrapper">
+            <div id="sortable" class="app-file-wrapper">
                 @foreach($orderFiles as $file)
                     <div class="card bg-dark text-white o-hidden mb-4 file-container" data-id="{{$file['id']}}" data-order="{{$file['order']}}">
                         @if ($isImage)

@@ -13,8 +13,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Title') }}</th>
-                        <th scope="col">{{ __('Price') }}</th>
-                        <th scope="col">{{ __('Discount Price') }}</th>
+                        <th scope="col">{{ __('Images') }}</th>
+                        <th scope="col">{{ __('Resources') }}</th>
                         <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Is Active') }}</th>
                         <th scope="col">{{ __('Categories') }}</th>
@@ -37,11 +37,23 @@
                                     {{ $row->name }}
                                 </th>
 
-                                <!-- price -->
-                                <td>{{ $row->price }} </td>
+                                <!-- images -->
+                                <td>
+                                    @if($row->images())
+                                        @foreach($row->images as $image)
+                                            <img src="{{ asset(getUrlPath($image['file_url'], 'tiny')) }}" alt="">
+                                        @endforeach
+                                    @endif
+                                </td>
 
-                                <!-- discount_price -->
-                                <td>{{ $row->discount_price }}</td>
+                                <!-- resources -->
+                                <td>
+                                    @if($row->resources())
+                                        @foreach($row->resources()->get() as $resource)
+                                            <a href="{{ asset(getUrlPath($resource['file_url'])) }}">{{$resource['title_section']}}</a><br>
+                                        @endforeach
+                                    @endif
+                                </td>
 
                                 <!-- short_description -->
                                 <td width="300px">{{ $row->short_description }}</td>

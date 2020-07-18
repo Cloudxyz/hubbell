@@ -32,7 +32,7 @@
                                         {{ __('Products') }}
                                     </label>
                                     <a href="{{ route('products') }}" class="link-menu">
-                                        <i class="nav-icon mr-2 i-Shop icon-color"></i>
+                                        <i class="nav-icon mr-2 i-Shopping-Cart icon-color"></i>
                                         {{ __('Products') }}
                                     </a>
                                     <!-- dropdown menu -->
@@ -46,6 +46,22 @@
                                             </li>
                                         @endif
                                     </ul>
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+
+                    @if ($_current_role->isAllowed('shops', 'heading-menu'))
+                        <li>
+                            <div>
+                                <div>
+                                    <label class="toggle" for="dropdownMenuBooking">
+                                        {{ __('Shops') }}
+                                    </label>
+                                    <a href="{{ route('shops') }}" class="link-menu">
+                                        <i class="nav-icon mr-2 i-Shop icon-color"></i>
+                                        {{ __('Shops') }}
+                                    </a>
                                 </div>
                             </div>
                         </li>

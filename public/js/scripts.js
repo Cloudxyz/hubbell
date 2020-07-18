@@ -110,11 +110,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scripts_handleMenuFit_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scripts/handleMenuFit.js */ "./resources/js/scripts/handleMenuFit.js");
 /* harmony import */ var _scripts_handleCategory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./scripts/handleCategory.js */ "./resources/js/scripts/handleCategory.js");
 /* harmony import */ var _scripts_handleImages_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./scripts/handleImages.js */ "./resources/js/scripts/handleImages.js");
-/* harmony import */ var _scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./scripts/initDatepickerComponents.js */ "./resources/js/scripts/initDatepickerComponents.js");
-/* harmony import */ var _scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./scripts/initFastSelectComponents.js */ "./resources/js/scripts/initFastSelectComponents.js");
-/* harmony import */ var _scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./scripts/initMapInputComponents.js */ "./resources/js/scripts/initMapInputComponents.js");
-/* harmony import */ var _scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./scripts/initTimepickerComponents.js */ "./resources/js/scripts/initTimepickerComponents.js");
-/* harmony import */ var _scripts_initDropZoneComponents_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./scripts/initDropZoneComponents.js */ "./resources/js/scripts/initDropZoneComponents.js");
+/* harmony import */ var _scripts_handleResources_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./scripts/handleResources.js */ "./resources/js/scripts/handleResources.js");
+/* harmony import */ var _scripts_handleRichEditor_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./scripts/handleRichEditor.js */ "./resources/js/scripts/handleRichEditor.js");
+/* harmony import */ var _scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./scripts/initDatepickerComponents.js */ "./resources/js/scripts/initDatepickerComponents.js");
+/* harmony import */ var _scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./scripts/initFastSelectComponents.js */ "./resources/js/scripts/initFastSelectComponents.js");
+/* harmony import */ var _scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./scripts/initMapInputComponents.js */ "./resources/js/scripts/initMapInputComponents.js");
+/* harmony import */ var _scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./scripts/initTimepickerComponents.js */ "./resources/js/scripts/initTimepickerComponents.js");
+/* harmony import */ var _scripts_initDropZoneComponents_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./scripts/initDropZoneComponents.js */ "./resources/js/scripts/initDropZoneComponents.js");
+
+
 
 
 
@@ -137,13 +141,15 @@ $(function () {
   function init() {
     $(window).resize(resize);
     Object(_scripts_handleMenuFit_js__WEBPACK_IMPORTED_MODULE_1__["handleMenuFit"])();
-    Object(_scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_4__["initDatepickerComponents"])();
-    Object(_scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_5__["initFastSelectComponents"])();
-    Object(_scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_6__["initMapInputComponents"])();
-    Object(_scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_7__["initTimepickerComponents"])();
-    Object(_scripts_initDropZoneComponents_js__WEBPACK_IMPORTED_MODULE_8__["initDropZoneComponents"])();
+    Object(_scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_6__["initDatepickerComponents"])();
+    Object(_scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_7__["initFastSelectComponents"])();
+    Object(_scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_8__["initMapInputComponents"])();
+    Object(_scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_9__["initTimepickerComponents"])();
+    Object(_scripts_initDropZoneComponents_js__WEBPACK_IMPORTED_MODULE_10__["initDropZoneComponents"])();
     Object(_scripts_handleCategory_js__WEBPACK_IMPORTED_MODULE_2__["handleCategory"])();
     Object(_scripts_handleImages_js__WEBPACK_IMPORTED_MODULE_3__["handleImages"])();
+    Object(_scripts_handleResources_js__WEBPACK_IMPORTED_MODULE_4__["handleResources"])();
+    Object(_scripts_handleRichEditor_js__WEBPACK_IMPORTED_MODULE_5__["handleRichEditor"])();
   }
 
   function resize() {
@@ -216,7 +222,11 @@ function handleImages() {
   fileContainer.mouseleave(function () {
     $(this).find('.card-img-overlay').fadeOut();
   });
-  var currentFiles = jQuery.parseJSON($('#sort_files').val());
+
+  if ($('#sort_files').length) {
+    var currentFiles = jQuery.parseJSON($('#sort_files').val());
+  }
+
   $("#sortable").sortable({
     revert: true,
     update: function update() {
@@ -349,6 +359,44 @@ function handleMenuFit() {
   } else {
     resetMenu();
   }
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/handleResources.js":
+/*!*************************************************!*\
+  !*** ./resources/js/scripts/handleResources.js ***!
+  \*************************************************/
+/*! exports provided: handleResources */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleResources", function() { return handleResources; });
+function handleResources() {
+  var counter_option = 0;
+  $('.add_resource').on('click', function () {
+    $('#resources_container').css('display', 'block');
+    $('#resources_container').append('<div class="section_container">' + '<div class="input-container">' + '<label>Titulo de sección</label><br>' + '<input type="text" name="section_resource[' + counter_option + '][title][]" />' + '</div>' + '<div class="input-container">' + '<label>Archivo de sección</label><br>' + '<input type="file" name="section_resource[' + counter_option + '][resource][]" />' + '</div>' + '</div>');
+    counter_option++;
+  });
+  return null;
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/handleRichEditor.js":
+/*!**************************************************!*\
+  !*** ./resources/js/scripts/handleRichEditor.js ***!
+  \**************************************************/
+/*! exports provided: handleRichEditor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleRichEditor", function() { return handleRichEditor; });
+function handleRichEditor() {
+  return null;
 }
 
 /***/ }),

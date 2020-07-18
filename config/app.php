@@ -230,6 +230,7 @@ return [
         // custom helpers
         'Image' => Intervention\Image\Facades\Image::class,
         'ImagesHelper' => App\Helpers\ImagesHelper::class,
+        'ResourcesHelper' => App\Helpers\ResourcesHelper::class,
         'RoleHelper' => App\Helpers\RoleHelper::class,
         'UserHelper' => App\Helpers\UserHelper::class,
 

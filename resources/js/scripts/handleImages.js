@@ -9,7 +9,9 @@ export function handleImages() {
         $(this).find('.card-img-overlay').fadeOut();
     });
 
-    var currentFiles = jQuery.parseJSON($('#sort_files').val());
+    if($('#sort_files').length){
+        var currentFiles = jQuery.parseJSON($('#sort_files').val());
+    }
 
     $( "#sortable" ).sortable({
         revert: true,

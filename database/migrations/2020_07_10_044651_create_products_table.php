@@ -21,7 +21,6 @@ class CreateProductsTable extends Migration
             $table->text('short_description')->nullable();
             $table->text('long_description')->nullable();
             $table->text('product_details')->nullable();
-            $table->text('resources')->nullable();
             $table->tinyInteger('is_active')->nullable()->default(1);
             $table->timestamps();
         });

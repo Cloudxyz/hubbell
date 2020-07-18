@@ -11,7 +11,7 @@ class Resource extends Model
     use AppModel;
     use Notifiable;
 
-    protected $table = 'images';
+    protected $table = 'resources';
     public $timestamps = true;
     protected $fillable = [
         'title_section',
@@ -21,14 +21,11 @@ class Resource extends Model
         'file_name',
         'file_path',
         'file_url',
-        'order'
+        'order',
+        'product_id'
     ];
 
-    public function products(){
-        return $this->morphedByMany('App\Models\Product', 'resourceable');
-    }
-
-    public function categories(){
-        return $this->morphedByMany('App\Models\Category', 'resourceable');
+    public function product(){
+        return $this->belongsTo('App\Models\Product');
     }
 }

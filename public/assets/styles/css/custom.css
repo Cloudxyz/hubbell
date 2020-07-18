@@ -1,3 +1,11 @@
+a:hover{
+    text-decoration: none;
+}
+
+textarea.form-control{
+    height: 200px;
+}
+
 .layout-horizontal-bar .main-header .logo img{
     width: 120px;
     height: auto;
@@ -52,6 +60,10 @@
     margin-right: 20px;
 }
 
+.app-file-wrapper .card-resource{
+    width: 200px;
+}
+
 .app-file-wrapper .card-title a{
     color: #fff !important;
     font-size: 12px;
@@ -83,4 +95,47 @@
 .btn-delete-file:hover{
     color: #fff;
     text-decoration: none;
+}
+
+.title_container{
+    background-color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    color: #000;
+    margin-bottom: 20px;
+    display: flex;
+    position: relative;
+}
+
+.title_container .btn-delete-file{
+    color: #494949;
+    font-size: 20px;
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    width: auto;
+}
+
+.title_section{
+    width: 90%;
+}
+
+.bg-dark{
+    background-color: #494949 !important;
+}
+
+#resources_container{
+    padding: 15px;
+    border: 1px solid #d2d6da;
+    margin-top: 20px;
+    border-radius: 5px;
+    display: none;
+}
+
+.section_container{
+    display: flex;
+}
+
+.input-container{
+    margin-right: 20px;
 }
