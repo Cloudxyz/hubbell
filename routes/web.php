@@ -58,6 +58,16 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('destroy/{id}', 'ProductsController@destroy')->name('products.destroy');
             });
 
+            // product internal routes
+            Route::group(['prefix' => '{product}'], function () {
+
+                // product: detail
+                Route::group(['prefix' => 'detail'], function () {
+                    Route::get('destroy/{id}', 'ProductDetailsController@destroy')->name('product-details.destroy');
+                });
+
+            });
+
             // categories
             Route::group(['prefix' => 'categories'], function () {
                 Route::group(['middleware' => 'role-permission:products,categories'], function() {
@@ -77,7 +87,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('destroy/{model}/{id}/{type}', 'ImagesController@destroy')->name('images.destroy');
         });
 
-        // images
+        // resources
         Route::group(['prefix' => 'resources'], function () {
             Route::get('destroy/{model}/{id}/{type}', 'ResourcesController@destroy')->name('resources.destroy');
         });

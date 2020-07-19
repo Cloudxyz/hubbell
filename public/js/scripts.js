@@ -111,12 +111,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scripts_handleCategory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./scripts/handleCategory.js */ "./resources/js/scripts/handleCategory.js");
 /* harmony import */ var _scripts_handleImages_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./scripts/handleImages.js */ "./resources/js/scripts/handleImages.js");
 /* harmony import */ var _scripts_handleResources_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./scripts/handleResources.js */ "./resources/js/scripts/handleResources.js");
-/* harmony import */ var _scripts_handleRichEditor_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./scripts/handleRichEditor.js */ "./resources/js/scripts/handleRichEditor.js");
-/* harmony import */ var _scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./scripts/initDatepickerComponents.js */ "./resources/js/scripts/initDatepickerComponents.js");
-/* harmony import */ var _scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./scripts/initFastSelectComponents.js */ "./resources/js/scripts/initFastSelectComponents.js");
-/* harmony import */ var _scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./scripts/initMapInputComponents.js */ "./resources/js/scripts/initMapInputComponents.js");
-/* harmony import */ var _scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./scripts/initTimepickerComponents.js */ "./resources/js/scripts/initTimepickerComponents.js");
-/* harmony import */ var _scripts_initDropZoneComponents_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./scripts/initDropZoneComponents.js */ "./resources/js/scripts/initDropZoneComponents.js");
+/* harmony import */ var _scripts_handleDynamic_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./scripts/handleDynamic.js */ "./resources/js/scripts/handleDynamic.js");
+/* harmony import */ var _scripts_handleRichEditor_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./scripts/handleRichEditor.js */ "./resources/js/scripts/handleRichEditor.js");
+/* harmony import */ var _scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./scripts/initDatepickerComponents.js */ "./resources/js/scripts/initDatepickerComponents.js");
+/* harmony import */ var _scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./scripts/initFastSelectComponents.js */ "./resources/js/scripts/initFastSelectComponents.js");
+/* harmony import */ var _scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./scripts/initMapInputComponents.js */ "./resources/js/scripts/initMapInputComponents.js");
+/* harmony import */ var _scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./scripts/initTimepickerComponents.js */ "./resources/js/scripts/initTimepickerComponents.js");
+/* harmony import */ var _scripts_initDropZoneComponents_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./scripts/initDropZoneComponents.js */ "./resources/js/scripts/initDropZoneComponents.js");
+
 
 
 
@@ -141,15 +143,16 @@ $(function () {
   function init() {
     $(window).resize(resize);
     Object(_scripts_handleMenuFit_js__WEBPACK_IMPORTED_MODULE_1__["handleMenuFit"])();
-    Object(_scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_6__["initDatepickerComponents"])();
-    Object(_scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_7__["initFastSelectComponents"])();
-    Object(_scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_8__["initMapInputComponents"])();
-    Object(_scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_9__["initTimepickerComponents"])();
-    Object(_scripts_initDropZoneComponents_js__WEBPACK_IMPORTED_MODULE_10__["initDropZoneComponents"])();
+    Object(_scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_7__["initDatepickerComponents"])();
+    Object(_scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_8__["initFastSelectComponents"])();
+    Object(_scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_9__["initMapInputComponents"])();
+    Object(_scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_10__["initTimepickerComponents"])();
+    Object(_scripts_initDropZoneComponents_js__WEBPACK_IMPORTED_MODULE_11__["initDropZoneComponents"])();
     Object(_scripts_handleCategory_js__WEBPACK_IMPORTED_MODULE_2__["handleCategory"])();
     Object(_scripts_handleImages_js__WEBPACK_IMPORTED_MODULE_3__["handleImages"])();
     Object(_scripts_handleResources_js__WEBPACK_IMPORTED_MODULE_4__["handleResources"])();
-    Object(_scripts_handleRichEditor_js__WEBPACK_IMPORTED_MODULE_5__["handleRichEditor"])();
+    Object(_scripts_handleDynamic_js__WEBPACK_IMPORTED_MODULE_5__["handleDynamic"])($('.add_detail'), $('#details_container'));
+    Object(_scripts_handleRichEditor_js__WEBPACK_IMPORTED_MODULE_6__["handleRichEditor"])();
   }
 
   function resize() {
@@ -199,6 +202,38 @@ __webpack_require__.r(__webpack_exports__);
 function handleCategory() {
   var levelsTotal = $('#field_category_level_id_ > option').length;
   console.log(levelsTotal);
+  return null;
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/handleDynamic.js":
+/*!***********************************************!*\
+  !*** ./resources/js/scripts/handleDynamic.js ***!
+  \***********************************************/
+/*! exports provided: handleDynamic */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleDynamic", function() { return handleDynamic; });
+function handleDynamic(btn, container) {
+  var counter_option = 0;
+  var counter_option_inner = 0;
+  btn.on('click', function () {
+    container.css('display', 'block');
+    container.append('<div class="input-container">' + '<label>Titulo de la sección</label><br>' + '<input type="text" name="list_dynamic[' + counter_option + '][title_section][]" />' + '</div>' + '<div class="btn btn-success add_sub_detail" data-section-container=".section_container_' + counter_option + '" data-section="list_dynamic[' + counter_option + ']">' + '<i class="i-Add"></i>Agregar Detalle' + '</div>' + '<div class="section_container_' + counter_option + '">' + '</div>');
+    counter_option++;
+    $.each($('.add_sub_detail'), function (e, v) {
+      $(v).on('click', function () {
+        var curren_container = $(v).data('section-container');
+        console.log(curren_container);
+        var current_section = $(v).data('section');
+        $(curren_container).append('<div class="input-container">' + '<label>Titulo</label><br>' + '<input type="text" name="list_dynamic[' + current_section + '][' + counter_option_inner + '][title][]" />' + '</div>' + '<div class="input-container">' + '<label>Descripción</label><br>' + '<input type="text" name="list_dynamic[' + current_section + '][' + counter_option_inner + '][description][]" />' + '</div>');
+        counter_option_inner++;
+      });
+    });
+  });
   return null;
 }
 

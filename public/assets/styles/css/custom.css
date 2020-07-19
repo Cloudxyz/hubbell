@@ -136,6 +136,23 @@ textarea.form-control{
     display: flex;
 }
 
+#details_container{
+    padding: 15px;
+    border: 1px solid #d2d6da;
+    margin-top: 20px;
+    border-radius: 5px;
+    display: none;
+}
+
 .input-container{
     margin-right: 20px;
+    width: 100%;
+}
+
+.input-container:nth-last-child(1){
+    margin-right: 0;
+}
+
+.input-container input, .input-container textarea{
+    width: 100%;
 }

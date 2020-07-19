@@ -55,6 +55,15 @@
             'disableDefaultOption' => true,
         ])
 
+        <!-- details -->
+        @include('components.form.list-dynamic', [
+            'group' => 'product',
+            'label' => __('Details'),
+            'name' => 'details',
+            'modelId' => $row->id,
+            'files' => $row->details()->get(),
+        ])
+
         <!-- resources -->
         @include('components.form.resource', [
             'group' => 'product',

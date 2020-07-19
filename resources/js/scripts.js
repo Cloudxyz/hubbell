@@ -3,6 +3,7 @@ import { handleMenuFit } from "./scripts/handleMenuFit.js";
 import { handleCategory } from "./scripts/handleCategory.js";
 import { handleImages } from "./scripts/handleImages.js";
 import { handleResources } from "./scripts/handleResources.js";
+import { handleDynamic } from "./scripts/handleDynamic.js";
 import { handleRichEditor } from "./scripts/handleRichEditor.js";
 import { initDatepickerComponents } from "./scripts/initDatepickerComponents.js";
 import { initFastSelectComponents } from "./scripts/initFastSelectComponents.js";
@@ -33,6 +34,7 @@ $(function() {
         handleCategory();
         handleImages();
         handleResources();
+        handleDynamic($('.add_detail'), $('#details_container'));
         handleRichEditor();
     }
 

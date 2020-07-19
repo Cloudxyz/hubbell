@@ -39,4 +39,8 @@ class Product extends Model
     public function resources(){
         return $this->hasMany('App\Models\Resource', 'product_id');
     }
+
+    public function details(){
+        return $this->hasMany('App\Models\ProductDetail', 'product_id');
+    }
 }
