@@ -9,7 +9,7 @@
     $hidden = isset($hidden) ? (bool) $hidden : false;
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
     $isMultiple = isset($isMultiple) ? (bool) $isMultiple : false;
-    $hasFiles = $files->isEmpty() ? (bool) false : true;
+    $hasDetails = $details->isEmpty() ? (bool) false : true;
 
     $fileName = isset($fileName) ? $fileName : '';
     $filePath = isset($filePath) ? $filePath : false;
@@ -28,7 +28,16 @@
     $hiddenStyle = ($hidden) ? ' display: none; ' : '';
     $readOnlyProp = ($readOnly) ? ' readonly ' : '';
     $multipleProp = $isMultiple ? ' multiple ' : '';
-    
+
+    $getDetails = [];
+
+    foreach($details as $key => $detail){
+        $getDetails[$detail['title_section']]['details'][$key]['id'] = $detail->id;
+        $getDetails[$detail['title_section']]['details'][$key]['title'] = $detail->title;
+        $getDetails[$detail['title_section']]['details'][$key]['description'] = $detail->description;
+        $getDetails[$detail['title_section']]['details'][$key]['product_id'] = $detail->product_id;
+    }
+
 @endphp
 
 <!-- name -->
@@ -54,25 +63,51 @@
             @endif
         </div>
 
-        @if (false)
-            <div class="app-file-wrapper">
-                @foreach($files as $file)
-                    <div class="card-resource card bg-dark text-white o-hidden mb-4 file-container" data-id="{{$file['id']}}" data-order="{{$file['order']}}">
-                        <div class="title_container">
-                            <div class="title_section">
-                                {{$file['title_section']}}
-                            </div>
-                            <a href="{{route('resources.destroy', [$modelId, $file['id'], $modelType])}}" class="btn-delete-file">
-                                <i class="i-Close"></i>
-                            </a></div>
-                        <h5 class="card-title">
-                            <a href="{{ asset(getUrlPath($file['file_url'])) }}" target="_blank">
-                                {{ $file['file_name'] }}
-                            </a>
-                        </h5>
-                        <img class="card-img" src="{{ asset('assets/images/file.png') }}" alt="Card image">
-
+        @if ($hasDetails)
+            <div class="app-details-wrapper">
+                <div class="modal_detail">
+                    <div class="detail_container_edit">
+                        <input id="id_edit" class="form-control" type="hidden" name="id_edit" />
+                        <div class="input-container">
+                            <label for="title_section_edit">Titulo Sección</label><br>
+                            <input id="title_section_edit" class="form-control" type="text" name="title_section_edit" />
+                        </div>
+                        <div class="input-container">
+                            <label for="title_edit">Titulo</label><br>
+                            <input id="title_edit" class="form-control" type="text" name="title_edit" />
+                        </div>
+                        <br>
+                        <div class="input-container">
+                            <label for="description_edit">Descripción</label><br>
+                            <textarea id="description_edit" class="form-control" name="description_edit"></textarea>
+                        </div>
                     </div>
+                </div>
+                @foreach($getDetails as $key => $detail)
+                    <div class="title_section_detail">{{$key}}</div>
+                    <table class="table table-bordered table-striped">
+                        <colgroup>
+                            <col width="45%">
+                            <col width="45%">
+                            <col width="5%">
+                        </colgroup>
+                        <tbody>
+                            @foreach ($detail['details'] as $item)
+                                <tr class="parent_detail">
+                                    <td>{{$item['title']}}</td>
+                                    <td>{{$item['description']}}</td>
+                                    <td class="btns-container">
+                                        <a href="#" class="btn_edit_detail text-success mr-2" data-title-section="{{$key}}" data-id="{{$item['id']}}" data-title="{{$item['title']}}" data-description="{{$item['description']}}">
+                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                        </a>
+                                        <a href="{{route('product-details.destroy', [$item['product_id'], $item['id']])}}" class="text-danger mr-2">
+                                            <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 @endforeach
             </div>
         @endif

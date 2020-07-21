@@ -156,3 +156,49 @@ textarea.form-control{
 .input-container input, .input-container textarea{
     width: 100%;
 }
+
+.app-details-wrapper{
+    margin-top: 20px;
+}
+
+.detail_item{
+    display: flex;
+}
+
+.title_section_detail{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btns-container{
+    display: flex;
+}
+
+.add_sub_detail{
+    background: #0792e3;
+    padding: 5px;
+    color: #fff;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.add_sub_detail:hover{
+    color: #fff;
+}
+
+.section_details_container{
+    margin-bottom: 20px;
+}
+
+.detail_container{
+    margin-bottom: 20px;
+}
+
+.detail_container_edit{
+    display: none;
+}
+
+.input-container textarea{
+    height: 100px;
+}

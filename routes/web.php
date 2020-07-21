@@ -33,7 +33,7 @@ Route::group(['middleware' => ['web']], function () {
 
         // shops
         Route::group(['prefix' => 'shops'], function () {
-            Route::group(['middleware' => 'role-permission:my-shops,index'], function() {
+            Route::group(['middleware' => 'role-permission:shops,index'], function() {
                 Route::get('', 'ShopsController@index')->name('shops');
                 Route::get('create', 'ShopsController@create')->name('shops.create');
                 Route::post('store', 'ShopsController@store')->name('shops.store');
@@ -41,6 +41,19 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{shop}', 'ShopsController@edit')->name('shops.edit');
                 Route::post('update/{id}', 'ShopsController@update')->name('shops.update');
                 Route::get('destroy/{id}', 'ShopsController@destroy')->name('shops.destroy');
+            });
+        });
+
+        // shops
+        Route::group(['prefix' => 'shops-types'], function () {
+            Route::group(['middleware' => 'role-permission:shops-types,index'], function() {
+                Route::get('', 'ShopsTypesController@index')->name('shops-types');
+                Route::get('create', 'ShopsTypesController@create')->name('shops-types.create');
+                Route::post('store', 'ShopsTypesController@store')->name('shops-types.store');
+                Route::get('show/{type}', 'ShopsTypesController@show')->name('shops-types.show');
+                Route::get('edit/{type}', 'ShopsTypesController@edit')->name('shops-types.edit');
+                Route::post('update/{id}', 'ShopsTypesController@update')->name('shops-types.update');
+                Route::get('destroy/{id}', 'ShopsTypesController@destroy')->name('shops-types.destroy');
             });
         });
 
@@ -58,14 +71,9 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('destroy/{id}', 'ProductsController@destroy')->name('products.destroy');
             });
 
-            // product internal routes
-            Route::group(['prefix' => '{product}'], function () {
-
-                // product: detail
-                Route::group(['prefix' => 'detail'], function () {
-                    Route::get('destroy/{id}', 'ProductDetailsController@destroy')->name('product-details.destroy');
-                });
-
+            // product: detail
+            Route::group(['prefix' => 'detail'], function () {
+                Route::get('destroy/{product}/{id}', 'ProductDetailsController@destroy')->name('product-details.destroy');
             });
 
             // categories

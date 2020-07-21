@@ -4,19 +4,11 @@
 
         <!-- name -->
         @include('components.form.input', [
-            'group' => 'shop',
+            'group' => 'shop-type',
             'label' => __('Name'),
             'name' => 'name',
             'required' => true,
             'value' => $row->name
-        ])
-
-        <!-- description -->
-        @include('components.form.textarea', [
-            'group' => 'shop',
-            'label' => __('Description'),
-            'name' => 'description',
-            'value' => $row->description
         ])
 
     </div>

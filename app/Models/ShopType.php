@@ -6,21 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use App\Traits\AppModel;
 
-class ProductDetail extends Model
+class ShopType extends Model
 {
     use AppModel;
     use Notifiable;
 
-    protected $table = 'product_details';
+    protected $table = 'shops_types';
     public $timestamps = true;
     protected $fillable = [
-        'title_section',
-        'title',
-        'description',
-        'product_id'
+        'name',
+        'phone'
     ];
 
-    public function product(){
-        return $this->belongsTo('App\Models\Product');
+    public function shops(){
+        return $this->belongsToMany('App\Models\Shop', 'shop_has_type', 'type_id', 'shop_id');
     }
 }

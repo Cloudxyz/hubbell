@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Image;
+use App\Models\ProductDetail;
 use App\Models\Resource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -93,6 +94,7 @@ class ProductsRepository implements ProductsRepositoryInterface
         $product->fill($requestData);
 
         if($product->save()){
+
             $product->categories()->sync($request->categories_ids);
 
             //$currentImages = $product->images()->orderBy('order', 'ASC')->get();
@@ -125,6 +127,7 @@ class ProductsRepository implements ProductsRepositoryInterface
                 }
 
             }
+
             if($request->section_resource){
                 foreach ($request->section_resource as $sectionResource){
                     if(!array_key_exists('resource', $sectionResource)){
@@ -142,6 +145,34 @@ class ProductsRepository implements ProductsRepositoryInterface
                     $resource->product_id = $product->id;
                     $resource->save();
                 }
+            }
+
+            if($request->list_dynamic){
+                foreach ($request->list_dynamic as $key => $dynamic){
+                    if($dynamic['title_section'][0] == null){
+                        continue;
+                    }
+
+                    foreach ($dynamic['details'] as $detail){
+                        if($detail['title'][0] == null || $detail['description'][0] == null){
+                            continue;
+                        }
+                        $productDetail = new ProductDetail;
+                        $productDetail->title_section = $dynamic['title_section'][0];
+                        $productDetail->title = $detail['title'][0];
+                        $productDetail->description = $detail['description'][0];
+                        $productDetail->product_id = $product->id;
+                        $productDetail->save();
+                    }
+                }
+            }
+
+            if($request->title_section_edit){
+                $editDetail = ProductDetail::where('id', $request->id_edit)->first();
+                $editDetail->title_section = $request->title_section_edit;
+                $editDetail->title = $request->title_edit;
+                $editDetail->description = $request->description_edit;
+                $editDetail->save();
             }
 
             /*if (!empty($request->resources)) {
@@ -178,6 +209,9 @@ class ProductsRepository implements ProductsRepositoryInterface
             foreach($product->resources()->get() as $resource){
                 $resource->delete();
                 ResourcesHelper::deleteFile($resource['file_path']);
+            }
+            foreach($product->details()->get() as $detail){
+                $detail->delete();
             }
             $product->delete();
         }

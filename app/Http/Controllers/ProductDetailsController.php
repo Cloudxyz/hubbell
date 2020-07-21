@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{
-    ProductDetail
-};
+use App\Models\{Product, ProductDetail};
 use App\Repositories\{
     ProductDetailsRepositoryInterface
 };
@@ -26,7 +24,7 @@ class ProductDetailsController extends Controller
         $search = trim($request->s);
         $productDetails = $this->repository->all($search);
 
-        return view('product_details.index')
+        return view('product-details.index')
             ->with('productDetails', $productDetails)
             ->with('search', $search);
     }
@@ -34,7 +32,7 @@ class ProductDetailsController extends Controller
     public function create()
     {
         $productDetail = $this->repository->blueprint();
-        return view('product_details.create')
+        return view('product-details.create')
             ->with('productDetail', $productDetail);
     }
 
@@ -42,13 +40,13 @@ class ProductDetailsController extends Controller
     {
         $productDetail = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('product_details.edit', [$productDetail->id]));
+        return redirect(route('product-details.edit', [$productDetail->id]));
     }
 
     public function show(ProductDetail $productDetail)
     {
         $productDetail = $this->repository->find($productDetail);
-        return view('product_details.show')
+        return view('product-details.show')
             ->with('productDetail', $productDetail);
     }
 
@@ -57,7 +55,7 @@ class ProductDetailsController extends Controller
         $productDetail = $this->repository->find($productDetail);
         $configUsers = ['paginate' => false];
         $users = $this->usersRepository->all('', $configUsers);
-        return view('product_details.edit')
+        return view('product-details.edit')
             ->with('productDetail', $productDetail)
             ->with('users', $users);
     }
@@ -66,15 +64,16 @@ class ProductDetailsController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect(route('product_details.edit', [$id]));
+        return redirect(route('product-details.edit', [$id]));
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $product, $id)
     {
         if ( $this->repository->canDelete($id) ) {
+            $product = Product::where('id', $id)->first();
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
-            return redirect(route('product_details'));
+            return redirect(route('products.edit', $product->id));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));

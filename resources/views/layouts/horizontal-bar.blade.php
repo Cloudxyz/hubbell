@@ -62,6 +62,17 @@
                                         <i class="nav-icon mr-2 i-Shop icon-color"></i>
                                         {{ __('Shops') }}
                                     </a>
+                                    <!-- dropdown menu -->
+                                    <input type="checkbox" id="dropdownMenuBooking">
+                                    <ul>
+                                        @if ($_current_role->isAllowed('shops-types', 'heading-menu'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('shops-types') }}">
+                                                    <span class="item-name">{{ __('Types') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
                                 </div>
                             </div>
                         </li>

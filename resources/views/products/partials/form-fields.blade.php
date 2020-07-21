@@ -61,7 +61,7 @@
             'label' => __('Details'),
             'name' => 'details',
             'modelId' => $row->id,
-            'files' => $row->details()->get(),
+            'details' => $row->details()->get(),
         ])
 
         <!-- resources -->

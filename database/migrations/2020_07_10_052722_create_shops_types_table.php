@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShoptypesTable extends Migration
+class CreateShopsTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateShoptypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('shoptypes', function (Blueprint $table) {
+        Schema::create('shops_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('shop_id')->unsigned();
-            $table->foreign('shop_id')->references('id')->on('shops')
-                ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateShoptypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shoptypes');
+        Schema::dropIfExists('shops_types');
     }
 }
