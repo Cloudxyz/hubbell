@@ -44,7 +44,7 @@ Route::group(['middleware' => ['web']], function () {
             });
         });
 
-        // shops
+        // shops-types
         Route::group(['prefix' => 'shops-types'], function () {
             Route::group(['middleware' => 'role-permission:shops-types,index'], function() {
                 Route::get('', 'ShopsTypesController@index')->name('shops-types');
@@ -54,6 +54,19 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{type}', 'ShopsTypesController@edit')->name('shops-types.edit');
                 Route::post('update/{id}', 'ShopsTypesController@update')->name('shops-types.update');
                 Route::get('destroy/{id}', 'ShopsTypesController@destroy')->name('shops-types.destroy');
+            });
+        });
+
+        // addresses
+        Route::group(['prefix' => 'addresses'], function () {
+            Route::group(['middleware' => 'role-permission:addresses,index'], function() {
+                Route::get('', 'AddressesController@index')->name('addresses');
+                Route::get('create', 'AddressesController@create')->name('addresses.create');
+                Route::post('store', 'AddressesController@store')->name('addresses.store');
+                Route::get('show/{type}', 'AddressesController@show')->name('addresses.show');
+                Route::get('edit/{type}', 'AddressesController@edit')->name('addresses.edit');
+                Route::post('update/{id}', 'AddressesController@update')->name('addresses.update');
+                Route::get('destroy/{id}', 'AddressesController@destroy')->name('addresses.destroy');
             });
         });
 

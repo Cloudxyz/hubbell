@@ -7,16 +7,20 @@ use App\Models\{
     Shop
 };
 use App\Repositories\{
-    ShopsRepositoryInterface
+    ShopsRepositoryInterface,
+    ShopsTypesRepositoryInterface
 };
 
 class ShopsController extends Controller
 {
     private $repository;
+    private $typesRepository;
     public function __construct(
-        ShopsRepositoryInterface $repository
+        ShopsRepositoryInterface $repository,
+        ShopsTypesRepositoryInterface $typesRepository
     ){
         $this->repository = $repository;
+        $this->typesRepository = $typesRepository;
     }
 
     public function index(Request $request)
@@ -32,7 +36,9 @@ class ShopsController extends Controller
     public function create()
     {
         $shop = $this->repository->blueprint();
+        $types = $this->typesRepository->all('');
         return view('shops.create')
+            ->with('types', $types)
             ->with('shop', $shop);
     }
 
@@ -46,14 +52,18 @@ class ShopsController extends Controller
     public function show(Shop $shop)
     {
         $shop = $this->repository->find($shop);
+        $types = $this->typesRepository->all('');
         return view('shops.show')
+            ->with('types', $types)
             ->with('shop', $shop);
     }
 
     public function edit(Shop $shop)
     {
         $shop = $this->repository->find($shop);
+        $types = $this->typesRepository->all('');
         return view('shops.edit')
+            ->with('types', $types)
             ->with('shop', $shop);
     }
 

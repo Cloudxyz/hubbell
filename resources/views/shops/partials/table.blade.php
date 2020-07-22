@@ -12,8 +12,10 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Owner') }}</th>
                         <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col">{{ __('Phone') }}</th>
+                        <th scope="col">{{ __('Types') }}</th>
+                        <th scope="col">{{ __('Address') }}</th>
                         <th scope="col">{{ __('Products') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
@@ -29,21 +31,35 @@
                                     {{ $row->id }}
                                 </th>
 
-                                <!-- owner -->
-                                <th>
-                                    <a href="{{ route('users.show', $row->user->id) }}">{{ $row->user->name }}</a>
-                                </th>
-
                                 <!-- name -->
                                 <th>
                                     {{ $row->name }}
+                                </th>
+
+                                <!-- phone -->
+                                <th>
+                                    {{ $row->phone }}
+                                </th>
+
+                                <!-- types -->
+                                <td>
+                                    @foreach ($row->types as $type)
+                                        <div>
+                                            <a href="{{route('shops-types.edit', $type['id'])}}">{{ $type['name'] }}</a>
+                                        </div>
+                                    @endforeach
+                                </td>
+
+                                <!-- address -->
+                                <th>
+                                    {{ $row->address }}
                                 </th>
 
                                 <!-- products -->
                                 <td>
                                     @foreach ($row->products as $product)
                                         <div>
-                                            {{ $product['name'] }}
+                                            <a href="{{route('products.edit', $product['id'])}}">{{ $product['name'] }}</a>
                                         </div>
                                     @endforeach
                                 </td>

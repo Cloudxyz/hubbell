@@ -92,6 +92,7 @@ class ImagesRepository implements ImagesRepositoryInterface
 
         if ($image && $this->canDelete($id)) {
             $image->delete();
+            $image->products()->detach();
             ImagesHelper::deleteFile($image->file_path);
             ImagesHelper::deleteThumbnails($image->file_path);
         }

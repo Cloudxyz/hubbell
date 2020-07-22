@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAddressesTable extends Migration
+class CreateShopHasProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateAddressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('addresses', function (Blueprint $table) {
-            $table->id();
-            $table->text('location');
-            $table->string('latitude');
-            $table->string('longitude');
+        Schema::create('shop_has_product', function (Blueprint $table) {
             $table->integer('shop_id')->unsigned();
+            $table->integer('product_id')->unsigned();
+
+            $table->unique(['shop_id', 'product_id']);
             $table->foreign('shop_id')->references('id')->on('shops')
                 ->onDelete('cascade')->onUpdate('cascade');
-            $table->timestamps();
+            $table->foreign('product_id')->references('id')->on('products')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('shop_has_product');
     }
 }

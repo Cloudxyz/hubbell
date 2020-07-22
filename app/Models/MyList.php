@@ -23,6 +23,6 @@ class MyList extends Model
     }
 
     public function products(){
-        return $this->belongsToMany('App\Models\Product', 'list_has_products', 'list_id', 'product_id');
+        return $this->belongsToMany('App\Models\Product', 'list_has_product', 'list_id', 'product_id');
     }
 }

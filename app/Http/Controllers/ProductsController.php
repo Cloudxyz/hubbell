@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Repositories\{ ProductsRepositoryInterface, CategoriesRepositoryInterface };
 use App\Models\{
     Product,
-    Category
+    Category,
+    Shop
 };
 
 class ProductsController extends Controller
@@ -34,8 +35,10 @@ class ProductsController extends Controller
     {
         $product = $this->repository->blueprint();
         $categories = Category::where('has_products', 1)->get();
+        $shops = Shop::all();
         return view('products.create')
             ->with('product', $product)
+            ->with('shops', $shops)
             ->with('categories', $categories);
     }
 
@@ -50,8 +53,10 @@ class ProductsController extends Controller
     {
         $product = $this->repository->find($product);
         $categories = $this->categoriesRepository->all('');
+        $shops = Shop::all();
         return view('products.show')
             ->with('product', $product)
+            ->with('shops', $shops)
             ->with('categories', $categories);
     }
 
@@ -59,8 +64,10 @@ class ProductsController extends Controller
     {
         $product = $this->repository->find($product);
         $categories = Category::where('has_products', 1)->get();
+        $shops = Shop::all();
         return view('products.edit')
             ->with('product', $product)
+            ->with('shops', $shops)
             ->with('categories', $categories);
     }
 

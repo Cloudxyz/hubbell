@@ -25,7 +25,7 @@ class Product extends Model
     ];
 
     public function myLists(){
-        return $this->belongsToMany('App\Models\MyList', 'list_has_products', 'product_id', 'list_id');
+        return $this->belongsToMany('App\Models\MyList', 'list_has_product', 'product_id', 'list_id');
     }
 
     public function categories(){
@@ -42,5 +42,9 @@ class Product extends Model
 
     public function details(){
         return $this->hasMany('App\Models\ProductDetail', 'product_id');
+    }
+
+    public function shops(){
+        return $this->belongsToMany('App\Models\Shop', 'shop_has_product', 'product_id', 'shop_id');
     }
 }

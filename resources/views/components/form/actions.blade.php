@@ -37,7 +37,7 @@
                         </button>
 
                         @if ($cancel_route)
-                            <a href="{{ route($cancel_route, $routeParams) }}" class="btn btn-outline-secondary m-1" role="button">
+                            <a href="{{ route($cancel_route) }}" class="btn btn-outline-secondary m-1" role="button">
                                 {{  __('Cancel') }}
                             </a>
                         @endif

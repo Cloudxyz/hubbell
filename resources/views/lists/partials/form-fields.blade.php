@@ -14,7 +14,7 @@
         <!-- user_id -->
         @include('components.form.select', [
             'group' => 'list',
-            'label' => __('User'),
+            'label' => __('Owner'),
             'name' => 'user_id',
             'value' => $row->user_id,
             'options' => $users,
@@ -23,6 +23,14 @@
             'optionLabelRef' => 'name',
             'required' => true,
             'disableDefaultOption' => true
+        ])
+
+        <!-- products -->
+        @include('components.form.textarea', [
+            'group' => 'product',
+            'label' => __('Products'),
+            'name' => 'products',
+            'value' => $row->products
         ])
 
     </div>

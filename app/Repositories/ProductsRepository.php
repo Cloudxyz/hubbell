@@ -96,6 +96,7 @@ class ProductsRepository implements ProductsRepositoryInterface
         if($product->save()){
 
             $product->categories()->sync($request->categories_ids);
+            $product->shops()->sync($request->shops_ids);
 
             //$currentImages = $product->images()->orderBy('order', 'ASC')->get();
             $currentImages = json_decode($request->sort_files);
@@ -202,9 +203,9 @@ class ProductsRepository implements ProductsRepositoryInterface
         if ($product && $this->canDelete($id)) {
             foreach($product->images()->get() as $image){
                 $image->delete();
+                $product->images()->detach($image['id']);
                 ImagesHelper::deleteFile($image['file_path']);
                 ImagesHelper::deleteThumbnails($image['file_path']);
-                $product->images()->detach($image['id']);
             }
             foreach($product->resources()->get() as $resource){
                 $resource->delete();
@@ -213,6 +214,8 @@ class ProductsRepository implements ProductsRepositoryInterface
             foreach($product->details()->get() as $detail){
                 $detail->delete();
             }
+            $product->categories()->sync([]);
+            $product->shops()->sync([]);
             $product->delete();
         }
 

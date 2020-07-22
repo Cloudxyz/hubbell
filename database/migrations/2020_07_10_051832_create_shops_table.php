@@ -17,6 +17,11 @@ class CreateShopsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone')->nullable();
+            $table->string('web')->nullable();
+            $table->string('email')->nullable();
+            $table->text('address')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
         });
     }

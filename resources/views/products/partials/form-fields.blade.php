@@ -55,6 +55,17 @@
             'disableDefaultOption' => true,
         ])
 
+        <!-- shops -->
+        @include('components.form.fast-select', [
+            'group' => 'product',
+            'label' => __('Shops'),
+            'multiple' => true,
+            'name' => 'shops_ids',
+            'options' => prepareSelectValuesFromRows($shops, ['labelRef' => 'name']),
+            'default' => prepareSelectDefaultValues($row->shops, ['valueRef' => 'id']),
+            'disableDefaultOption' => true,
+        ])
+
         <!-- details -->
         @include('components.form.list-dynamic', [
             'group' => 'product',

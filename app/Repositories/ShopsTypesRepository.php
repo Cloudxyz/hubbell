@@ -88,6 +88,7 @@ class ShopsTypesRepository implements ShopsTypesRepositoryInterface
         $shopType = $this->model->find($id);
         
         if ($shopType && $this->canDelete($id)) {
+            $shopType->shops()->detach();
             $shopType->delete();
         }
 

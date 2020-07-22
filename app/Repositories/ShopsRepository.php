@@ -66,7 +66,10 @@ class ShopsRepository implements ShopsRepositoryInterface
 
         $shop->fill($requestData);
 
-        $shop->save();
+        if($shop->save()){
+
+            $shop->types()->sync($request->types_ids);
+        }
 
         return $shop;
     }
@@ -89,6 +92,9 @@ class ShopsRepository implements ShopsRepositoryInterface
         
         if ($shop && $this->canDelete($id)) {
             $shop->delete();
+            foreach($shop->types()->get() as $type){
+                $shop->types()->detach($type['id']);
+            }
         }
 
         return $shop;
