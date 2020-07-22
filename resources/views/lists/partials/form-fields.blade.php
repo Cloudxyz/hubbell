@@ -30,7 +30,10 @@
             'group' => 'product',
             'label' => __('Products'),
             'name' => 'products',
-            'value' => $row->products
+            'placeholder' => __('Add One Product Identifier Per Line (Catalog Number or Product Name)'),
+            'children' => true,
+            'listId' => $row->id,
+            'dataChildren' => $row->products
         ])
 
     </div>

@@ -28,6 +28,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{list}', 'ListsController@edit')->name('lists.edit');
                 Route::post('update/{id}', 'ListsController@update')->name('lists.update');
                 Route::get('destroy/{id}', 'ListsController@destroy')->name('lists.destroy');
+                Route::get('destroy/{list}/{id}', 'ListsController@lists_destroy')->name('lists-product.destroy');
             });
         });
 

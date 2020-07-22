@@ -20,7 +20,6 @@ class CreateProductsTable extends Migration
             $table->string('catalog_id');
             $table->text('short_description')->nullable();
             $table->text('long_description')->nullable();
-            $table->text('product_details')->nullable();
             $table->tinyInteger('is_active')->nullable()->default(1);
             $table->timestamps();
         });

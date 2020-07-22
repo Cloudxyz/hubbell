@@ -4,7 +4,10 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Models\MyList;
+use App\Models\{
+    Product,
+    MyList
+};
 use App\Repositories\ListsRepositoryInterface;
 use App\Validations\ListsValidations;
 
@@ -66,7 +69,21 @@ class ListsRepository implements ListsRepositoryInterface
 
         $list->fill($requestData);
 
-        $list->save();
+        if(!empty($request->products)){
+            $products = [];
+            $productsString = explode("\n", str_replace("\r", "", $request->products));
+            foreach ($productsString as $productId){
+                $product = Product::where('name', intval($productId))
+                    ->where('catalog_id', intval($productId))->first();
+                if($product){
+                    $products[] = $product->id;
+                }
+            }
+        }
+
+        if($list->save()){
+            $list->products()->attach($products);
+        }
 
         return $list;
     }
@@ -88,6 +105,9 @@ class ListsRepository implements ListsRepositoryInterface
         $list = $this->model->find($id);
         
         if ($list && $this->canDelete($id)) {
+            foreach($list->products()->get() as $product){
+                $list->products()->detach($product->id);
+            }
             $list->delete();
         }
 

@@ -214,6 +214,9 @@ class ProductsRepository implements ProductsRepositoryInterface
             foreach($product->details()->get() as $detail){
                 $detail->delete();
             }
+            foreach($product->myLists()->get() as $list){
+                $product->myLists()->detach($list->id);
+            }
             $product->categories()->sync([]);
             $product->shops()->sync([]);
             $product->delete();

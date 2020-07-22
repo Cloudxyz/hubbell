@@ -40,8 +40,10 @@ class ListsController extends Controller
         $list = $this->repository->blueprint();
         $configUsers = ['paginate' => false];
         $users = $this->usersRepository->all('', $configUsers);
+        $products = ($list->products->isEmpty()) ? false : $list->products;
         return view('lists.create')
             ->with('list', $list)
+            ->with('products', $products)
             ->with('users', $users);
     }
 
@@ -64,8 +66,10 @@ class ListsController extends Controller
         $list = $this->repository->find($list);
         $configUsers = ['paginate' => false];
         $users = $this->usersRepository->all('', $configUsers);
+        $products = ($list->products->isEmpty()) ? false : $list->products;
         return view('lists.edit')
             ->with('list', $list)
+            ->with('products', $products)
             ->with('users', $users);
     }
 
@@ -86,5 +90,13 @@ class ListsController extends Controller
 
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
+    }
+
+    public function lists_destroy(Request $request, $list, $id)
+    {
+        $list = MyList::where('id', $list)->first();
+        $list->products()->detach($id);
+        $request->session()->flash('success', __('Record deleted successfully'));
+        return redirect(route('lists.edit', $list));
     }
 }

@@ -43,7 +43,7 @@
                                 <td>
                                     @foreach ($row->products as $product)
                                         <div>
-                                            {{ $product['name'] }}
+                                            <a href="{{route('products.edit', $product->id)}}">{{ $product['name'] }}</a>
                                         </div>
                                     @endforeach
                                 </td>
