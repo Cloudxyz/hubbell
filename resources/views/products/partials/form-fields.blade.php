@@ -19,7 +19,6 @@
             'value' => $row->slug
         ])
 
-
         <!-- catalog_id -->
         @include('components.form.input', [
             'group' => 'product',
@@ -42,6 +41,15 @@
             'label' => __('Long Description'),
             'name' => 'long_description',
             'value' => $row->long_description
+        ])
+
+        <!-- is_active -->
+        @include('components.form.checkbox', [
+            'group' => 'user',
+            'label' => __('Active'),
+            'name' => 'is_active',
+            'value' => 1,
+            'default' => $row->is_active,
         ])
 
         <!-- categories -->

@@ -4,9 +4,13 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\{
+    Category,
+    Image
+};
 use App\Repositories\CategoriesRepositoryInterface;
 use App\Validations\CategoriesValidations;
+use App\Helpers\ImagesHelper;
 
 class CategoriesRepository implements CategoriesRepositoryInterface
 {
@@ -24,20 +28,20 @@ class CategoriesRepository implements CategoriesRepositoryInterface
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
 
         if ($search) {
-            $query = 
-                Category::where('name', 'like', "%".$search."%");
+            $query =
+                Category::where('name', 'like', "%" . $search . "%");
         } else {
             $query = Category::query();
         }
 
         $query->orderBy('name', 'asc');
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -62,9 +66,9 @@ class CategoriesRepository implements CategoriesRepositoryInterface
             $category = $this->find($id);
         }
 
-        if (!empty($request->slug)){
+        if (!empty($request->slug)) {
             $slug = $request->slug;
-        }else {
+        } else {
             $slug = deleteAccents($request->name);
         }
 
@@ -79,7 +83,23 @@ class CategoriesRepository implements CategoriesRepositoryInterface
 
         $category->fill($requestData);
 
-        $category->save();
+        if ($category->save()) {
+            if ($request->hasFile('images')) {
+                $imgData = ImagesHelper::saveFile($request->images, 'images/categories');
+                $image = new Image;
+                $image->slug = $imgData['slug'];
+                $image->extension = $imgData['extension'];
+                $image->file_original_name = $imgData['file_original_name'];
+                $image->file_name = $imgData['file_name'];
+                $image->file_path = $imgData['file_path'];
+                $image->file_url = $imgData['file_url'];
+                $image->order = 0;
+
+                if ($image->save()) {
+                    $category->images()->save($image);
+                }
+            }
+        }
 
         return $category;
     }
@@ -95,12 +115,19 @@ class CategoriesRepository implements CategoriesRepositoryInterface
 
         return $category;
     }
-    
+
     public function delete($id)
     {
         $category = $this->model->find($id);
-        
+
         if ($category && $this->canDelete($id)) {
+            foreach ($category->images()->get() as $image) {
+                $image->delete();
+                $category->images()->detach($image['id']);
+                ImagesHelper::deleteFile($image['file_path']);
+                ImagesHelper::deleteThumbnails($image['file_path']);
+            }
+            $category->products()->sync([]);
             $category->delete();
         }
 

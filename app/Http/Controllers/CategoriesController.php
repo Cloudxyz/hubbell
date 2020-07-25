@@ -20,7 +20,7 @@ class CategoriesController extends Controller
     public function __construct(
         CategoriesRepositoryInterface $repository,
         LevelsRepositoryInterface $levelsRepository
-    )    {
+    ) {
         $this->repository = $repository;
         $this->levelsRepository = $levelsRepository;
     }
@@ -56,7 +56,7 @@ class CategoriesController extends Controller
         $category = $this->repository->find($category);
         $levels = $this->levelsRepository->all('');
         $parentCategories = 0;
-        switch ($category->level_id){
+        switch ($category->level_id) {
             case 2;
                 $parentCategories = Category::where('level_id', '1')->get();
                 break;
@@ -82,7 +82,7 @@ class CategoriesController extends Controller
         $category = $this->repository->find($category);
         $levels = $this->levelsRepository->all('');
         $parentCategories = 0;
-        switch ($category->level_id){
+        switch ($category->level_id) {
             case 2;
                 $parentCategories = Category::where('level_id', '1')->get();
                 break;
@@ -112,7 +112,7 @@ class CategoriesController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('categories'));

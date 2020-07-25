@@ -73,6 +73,16 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\ShopsTypesRepository::class
         );
 
+        $this->app->bind(
+            \App\Repositories\PostsRepositoryInterface::class,
+            \App\Repositories\PostsRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\TagsRepositoryInterface::class,
+            \App\Repositories\TagsRepository::class
+        );
+
     }
 
     /**

@@ -74,6 +74,17 @@
                                     @endif
                                 </td>
 
+                                <!-- shops -->
+                                <td>
+                                    @if(count($row->shops) > 0)
+                                        @foreach($row->shops as $shop)
+                                            <a href="{{route('shops.edit', $shop->id)}}">{{ $shop->name }}</a><br>
+                                        @endforeach
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [

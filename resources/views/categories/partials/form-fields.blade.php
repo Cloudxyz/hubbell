@@ -66,6 +66,18 @@
             </div>
         @endif
 
+        <!-- images -->
+        @include('components.form.image', [
+            'group' => 'product',
+            'label' => __('Images'),
+            'name' => 'images',
+            'isMultiple' => false,
+            'isImage' => true,
+            'modelId' => $row->id,
+            'modelType' => 'categories',
+            'files' => $row->images()->get(),
+        ])
+
     </div>
 </div>
 

@@ -2,12 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\Image;
-use App\Models\ProductDetail;
-use App\Models\Resource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\{
+    Product,
+    Image,
+    ProductDetail,
+    Resource
+};
 use App\Repositories\ProductsRepositoryInterface;
 use App\Validations\ProductsValidations;
 use App\Helpers\{
@@ -31,20 +33,20 @@ class ProductsRepository implements ProductsRepositoryInterface
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
 
         if ($search) {
-            $query = 
-                Product::where('name', 'like', "%".$search."%");
+            $query =
+                Product::where('name', 'like', "%" . $search . "%");
         } else {
             $query = Product::query();
         }
 
         $query->orderBy('name', 'asc');
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -62,23 +64,23 @@ class ProductsRepository implements ProductsRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
-        $is_new = ! $id;
+        $is_new = !$id;
 
         if ($is_new) {
             $product = $this->blueprint();
-        }else{
+        } else {
             $product = $this->find($id);
         }
 
-        if (!empty($request->slug)){
+        if (!empty($request->slug)) {
             $slug = $request->slug;
-        }else {
+        } else {
             $slug = deleteAccents($request->name);
         }
 
-        if (!empty($request->catalog_id)){
+        if (!empty($request->catalog_id)) {
             $catalog_id = $request->catalog_id;
-        }else {
+        } else {
             $catalog_id = $request->name;
         }
 
@@ -93,17 +95,17 @@ class ProductsRepository implements ProductsRepositoryInterface
 
         $product->fill($requestData);
 
-        if($product->save()){
+        if ($product->save()) {
 
             $product->categories()->sync($request->categories_ids);
             $product->shops()->sync($request->shops_ids);
 
             //$currentImages = $product->images()->orderBy('order', 'ASC')->get();
             $currentImages = json_decode($request->sort_files);
-            array_multisort( array_column($currentImages, "order"), SORT_ASC, $currentImages );
+            array_multisort(array_column($currentImages, "order"), SORT_ASC, $currentImages);
             $limitOrder = 1;
 
-            foreach ($currentImages as $index => $currentImage){
+            foreach ($currentImages as $index => $currentImage) {
                 $getImage = Image::where('id', $currentImage->id)->first();
                 $getImage->order = $limitOrder++;
                 $getImage->save();
@@ -111,8 +113,8 @@ class ProductsRepository implements ProductsRepositoryInterface
 
             if ($request->hasFile('images')) {
 
-                foreach($request->images as $img) {
-                    $imgData = ImagesHelper::saveFile($img, 'images');
+                foreach ($request->images as $img) {
+                    $imgData = ImagesHelper::saveFile($img, 'images/products');
                     $image = new Image;
                     $image->slug = $imgData['slug'];
                     $image->extension = $imgData['extension'];
@@ -122,16 +124,15 @@ class ProductsRepository implements ProductsRepositoryInterface
                     $image->file_url = $imgData['file_url'];
                     $image->order = $limitOrder++;
 
-                    if($image->save()){
+                    if ($image->save()) {
                         $product->images()->save($image);
                     }
                 }
-
             }
 
-            if($request->section_resource){
-                foreach ($request->section_resource as $sectionResource){
-                    if(!array_key_exists('resource', $sectionResource)){
+            if ($request->section_resource) {
+                foreach ($request->section_resource as $sectionResource) {
+                    if (!array_key_exists('resource', $sectionResource)) {
                         continue;
                     }
                     $resourceData = ResourcesHelper::saveFile($sectionResource['resource'][0], 'resources');
@@ -148,14 +149,14 @@ class ProductsRepository implements ProductsRepositoryInterface
                 }
             }
 
-            if($request->list_dynamic){
-                foreach ($request->list_dynamic as $key => $dynamic){
-                    if($dynamic['title_section'][0] == null){
+            if ($request->list_dynamic) {
+                foreach ($request->list_dynamic as $key => $dynamic) {
+                    if ($dynamic['title_section'][0] == null) {
                         continue;
                     }
 
-                    foreach ($dynamic['details'] as $detail){
-                        if($detail['title'][0] == null || $detail['description'][0] == null){
+                    foreach ($dynamic['details'] as $detail) {
+                        if ($detail['title'][0] == null || $detail['description'][0] == null) {
                             continue;
                         }
                         $productDetail = new ProductDetail;
@@ -168,7 +169,7 @@ class ProductsRepository implements ProductsRepositoryInterface
                 }
             }
 
-            if($request->title_section_edit){
+            if ($request->title_section_edit) {
                 $editDetail = ProductDetail::where('id', $request->id_edit)->first();
                 $editDetail->title_section = $request->title_section_edit;
                 $editDetail->title = $request->title_edit;
@@ -195,26 +196,26 @@ class ProductsRepository implements ProductsRepositoryInterface
 
         return $product;
     }
-    
+
     public function delete($id)
     {
         $product = $this->model->find($id);
 
         if ($product && $this->canDelete($id)) {
-            foreach($product->images()->get() as $image){
+            foreach ($product->images()->get() as $image) {
                 $image->delete();
                 $product->images()->detach($image['id']);
                 ImagesHelper::deleteFile($image['file_path']);
                 ImagesHelper::deleteThumbnails($image['file_path']);
             }
-            foreach($product->resources()->get() as $resource){
+            foreach ($product->resources()->get() as $resource) {
                 $resource->delete();
                 ResourcesHelper::deleteFile($resource['file_path']);
             }
-            foreach($product->details()->get() as $detail){
+            foreach ($product->details()->get() as $detail) {
                 $detail->delete();
             }
-            foreach($product->myLists()->get() as $list){
+            foreach ($product->myLists()->get() as $list) {
                 $product->myLists()->detach($list->id);
             }
             $product->categories()->sync([]);

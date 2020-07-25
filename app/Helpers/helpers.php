@@ -14,7 +14,7 @@ if (!function_exists('prepareFormInputName')) {
         } else if ($parentName) {
             $inputName = "{$parentName}[{$name}]";
         }
-        
+
         return $inputName;
     }
 }
@@ -32,7 +32,7 @@ if (!function_exists('prepareFormRequestName')) {
         } else if ($parentName) {
             $requestName = "{$parentName}.{$name}";
         }
-        
+
         return $requestName;
     }
 }
@@ -54,11 +54,11 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
             $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
             $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
             $secondLabelRef = isset($config['secondLabelRef']) ? $config['secondLabelRef'] : ''; // default empty
-        
-            foreach($items as $item) {
+
+            foreach ($items as $item) {
                 $labelRefValue = isset($item->{$labelRef}) ? $item->{$labelRef} : '';
                 $secondLabelRefValue = isset($item->{$secondLabelRef}) ? $item->{$secondLabelRef} : '';
-                
+
                 $values[] = [
                     'label' => trim($labelRefValue . ' ' . $item->{$secondLabelRefValue}),
                     'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
@@ -79,11 +79,11 @@ if (!function_exists('prepareCheckboxDefaultValues')) {
         if ($shouldLoopForValues) {
             $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
 
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 $defaultValues[] = isset($item->{$valueRef}) ? $item->{$valueRef} : '';
             }
         }
-        
+
         return $defaultValues;
     }
 }
@@ -98,7 +98,7 @@ if (!function_exists('prepareSelectValuesFromRows')) {
             $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
             $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
 
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 $values[] = [
                     'label' => isset($item->{$labelRef}) ? $item->{$labelRef} : '',
                     'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
@@ -119,7 +119,7 @@ if (!function_exists('prepareSelectDefaultValues')) {
         if ($shouldLoopForValues) {
             $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
 
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 $defaultValues[] = isset($item->{$valueRef}) ? $item->{$valueRef} : '';
             }
         }
@@ -131,8 +131,8 @@ if (!function_exists('prepareSelectDefaultValues')) {
 if (!function_exists('priceFormat')) {
     function priceFormat($price, $decimals = 2)
     {
-        if($price < 0) {
-            return '-$' . number_format(abs($price), $decimals);    
+        if ($price < 0) {
+            return '-$' . number_format(abs($price), $decimals);
         }
 
         return '$' . number_format($price, $decimals);
@@ -142,7 +142,7 @@ if (!function_exists('priceFormat')) {
 if (!function_exists('getStatusIcon')) {
     function getStatusIcon($isEnabled = false)
     {
-        if($isEnabled) {
+        if ($isEnabled) {
             return '<i class="nav-icon i-Yes font-weight-bold text-success"></i>';
         }
 
@@ -181,9 +181,9 @@ if (!function_exists('getUrlPath')) {
 
 if (!function_exists('getCurrentUrlFull')) {
     function getCurrentUrlFull($export)
-    {        
-        $union = (Request::fullUrl() ==  Request::url()) ? '?' : '&';                
-        return Request::fullUrl().$union.$export.'=1';
+    {
+        $union = (Request::fullUrl() ==  Request::url()) ? '?' : '&';
+        return Request::fullUrl() . $union . $export . '=1';
     }
 }
 
@@ -208,22 +208,26 @@ if (!function_exists('deleteAccents')) {
         $string = str_replace(
             array('é', 'è', 'ë', 'ê', 'É', 'È', 'Ê', 'Ë'),
             array('e', 'e', 'e', 'e', 'E', 'E', 'E', 'E'),
-            $string);
+            $string
+        );
 
         $string = str_replace(
             array('í', 'ì', 'ï', 'î', 'Í', 'Ì', 'Ï', 'Î'),
             array('i', 'i', 'i', 'i', 'I', 'I', 'I', 'I'),
-            $string);
+            $string
+        );
 
         $string = str_replace(
             array('ó', 'ò', 'ö', 'ô', 'Ó', 'Ò', 'Ö', 'Ô'),
             array('o', 'o', 'o', 'o', 'O', 'O', 'O', 'O'),
-            $string);
+            $string
+        );
 
         $string = str_replace(
             array('ú', 'ù', 'ü', 'û', 'Ú', 'Ù', 'Û', 'Ü'),
             array('u', 'u', 'u', 'u', 'U', 'U', 'U', 'U'),
-            $string);
+            $string
+        );
 
         $string = str_replace(
             array('ñ', 'Ñ', 'ç', 'Ç'),
@@ -234,5 +238,42 @@ if (!function_exists('deleteAccents')) {
         $string = preg_replace("/[^a-zA-Z0-9\_\-]+/", "", $string);
 
         return $string;
+    }
+}
+
+if (!function_exists('csvToArray')) {
+    function csvToArray($filename = '', $delimiter = ',')
+    {
+        if (!file_exists($filename) || !is_readable($filename))
+            return false;
+
+        $header = null;
+        $data = array();
+        if (($handle = fopen($filename, 'r')) !== false) {
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
+                if (!$header)
+                    $header = $row;
+                else
+                    $data[] = array_combine($header, $row);
+            }
+            fclose($handle);
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('importCsv')) {
+    function importCsv()
+    {
+        $file = public_path('file/test.csv');
+
+        $customerArr = $this->csvToArray($file);
+
+        for ($i = 0; $i < count($customerArr); $i++) {
+            User::firstOrCreate($customerArr[$i]);
+        }
+
+        return 'Jobi done or what ever';
     }
 }

@@ -6,14 +6,14 @@
         'label' => __('Edit'),
         'breadcrumbs' => [
             [
-                'url' => route('categories'),
-                'label' => __('Categories'),
+                'url' => route('tags'),
+                'label' => __('Tags'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('categories.create'),
+                'url' => route('tags.create'),
             ]
         ]
     ])
@@ -24,12 +24,11 @@
 @endsection
 
 @section('main-content')
-
     <div class="container app-container-sm">
-        <form action="{{ route('categories.update', [$category->id]) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('tags.update', [$tag->id]) }}" method="post">
             @csrf
-            @include('categories.partials.form', [
-                'row' => $category
+            @include('tags.partials.form', [
+                'row' => $tag
             ])
         </form>
     </div>

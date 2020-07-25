@@ -3,17 +3,17 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('Edit'),
+        'label' => __('View'),
         'breadcrumbs' => [
             [
-                'url' => route('categories'),
-                'label' => __('Categories'),
+                'url' => route('tags'),
+                'label' => __('Tags'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('categories.create'),
+                'url' => route('tags.create'),
             ]
         ]
     ])
@@ -26,11 +26,11 @@
 @section('main-content')
 
     <div class="container app-container-sm">
-        <form action="{{ route('categories.update', [$category->id]) }}" method="post" enctype="multipart/form-data">
-            @csrf
-            @include('categories.partials.form', [
-                'row' => $category
-            ])
+        <form action="" onsubmit="return false;" method="post">
+            @include('tags.partials.form', [
+                'row' => $tag,
+                'disabled' => true
+            ])        
         </form>
     </div>
 

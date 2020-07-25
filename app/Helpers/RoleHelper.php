@@ -166,9 +166,37 @@ class RoleHelper
                 'index' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
-                ])
+                ]),
             ],
             'shops-types' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ])
+            ],
+            'posts' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ])
+            ],
+            'tags' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'

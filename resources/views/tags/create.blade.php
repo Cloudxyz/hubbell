@@ -6,8 +6,8 @@
         'label' => __('New'),
         'breadcrumbs' => [
             [
-                'url' => route('categories'),
-                'label' => __('Categories'),
+                'url' => route('tags'),
+                'label' => __('Tags'),
             ],
         ]
     ])
@@ -21,9 +21,9 @@
 
 
     <div class="container app-container-sm">
-        <form action="{{ route('categories.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('tags.store') }}" method="post">
             @csrf
-            @include('categories.partials.form', ['row' => $category])
+            @include('tags.partials.form', ['row' => $tag])
         </form>
     </div>
 

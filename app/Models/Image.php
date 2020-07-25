@@ -29,4 +29,8 @@ class Image extends Model
     public function categories(){
         return $this->morphedByMany('App\Models\Category', 'imageable');
     }
+
+    public function posts(){
+        return $this->morphedByMany('App\Models\Post', 'imageable');
+    }
 }

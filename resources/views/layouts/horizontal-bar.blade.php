@@ -78,6 +78,33 @@
                         </li>
                     @endif
 
+                    @if ($_current_role->isAllowed('posts', 'heading-menu'))
+                        <li>
+                            <div>
+                                <div>
+                                    <label class="toggle" for="dropdownMenuBooking">
+                                        {{ __('Posts') }}
+                                    </label>
+                                    <a href="{{ route('posts') }}" class="link-menu">
+                                        <i class="nav-icon mr-2 i-Book icon-color"></i>
+                                        {{ __('Posts') }}
+                                    </a>
+                                    <!-- dropdown menu -->
+                                    <input type="checkbox" id="dropdownMenuBooking">
+                                    <ul>
+                                        @if ($_current_role->isAllowed('tags', 'heading-menu'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('tags') }}">
+                                                    <span class="item-name">{{ __('Tags') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+
                     @if ($_current_role->isAllowed('settings', 'heading-menu'))
                         <li>
                             <div>
