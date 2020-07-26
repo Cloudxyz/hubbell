@@ -18,6 +18,7 @@
                         <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Is Active') }}</th>
                         <th scope="col">{{ __('Categories') }}</th>
+                        <th scope="col">{{ __('Shop') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -33,7 +34,7 @@
                                 </th>
 
                                 <!-- name -->
-                                <th>
+                                <th width="200px">
                                     {{ $row->name }}
                                 </th>
 

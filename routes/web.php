@@ -18,6 +18,16 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('', 'DashboardController@index');
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+        // imports
+        Route::group(['prefix' => 'import'], function () {
+            Route::group(['middleware' => 'role-permission:import,index'], function () {
+                Route::get('users', 'ImportController@users')->name('users.import');
+                Route::get('categories', 'ImportController@categories')->name('categories.import');
+                Route::get('products', 'ImportController@products')->name('products.import');
+                Route::post('import/{type}', 'ImportController@import')->name('import');
+            });
+        });
+
         // lists
         Route::group(['prefix' => 'my-lists'], function () {
             Route::group(['middleware' => 'role-permission:my-lists,index'], function () {

@@ -88,10 +88,9 @@ class ProductsRepository implements ProductsRepositoryInterface
             'name' => $request->name,
             'slug' => $slug,
             'catalog_id' => $catalog_id,
-            'short_description' => $request->short_description,
-            'long_description' => $request->long_description
+            'short_description' => addslashes($request->short_description),
+            'long_description' => addslashes($request->long_description)
         ];
-
 
         $product->fill($requestData);
 

@@ -29,7 +29,7 @@
                             <tr>
 
                                 <!-- name -->
-                                <th>
+                                <th width="200px">
                                     {{ $row->name }}
                                 </th>
 
@@ -59,7 +59,7 @@
                                 </td>
 
                                 <!-- description -->
-                                <td width="300px">{{ $row->description }}</td>
+                                <td width="200px">{{ $row->description }}</td>
 
                                 <td>
                                     {!! getStatusIcon($row->has_products) !!}

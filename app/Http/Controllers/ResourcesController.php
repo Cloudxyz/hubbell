@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{ Product, Category, Resource };
+use App\Models\{Product, Resource};
 use App\Helpers\ResourcesHelper;
 
 class ResourcesController extends Controller
@@ -11,13 +11,8 @@ class ResourcesController extends Controller
 
     public function destroy(Request $request, $modelId, $id, $type = '')
     {
-        if($type == 'products'){
-            $model = Product::where('id', $modelId)->first();
-            $route = 'products.edit';
-        }else{
-            $model = Category::where('id', $modelId)->first();
-            $route = 'categories.edit';
-        }
+        $model = Product::where('id', $modelId)->first();
+        $route = 'products.edit';
 
         $resource = Resource::where('id', $id)->first();
         $resource->delete();

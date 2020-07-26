@@ -15,7 +15,7 @@ class ProductDetailsController extends Controller
 
     public function __construct(
         ProductDetailsRepositoryInterface $repository
-    ){
+    ) {
         $this->repository = $repository;
     }
 
@@ -69,11 +69,11 @@ class ProductDetailsController extends Controller
 
     public function destroy(Request $request, $product, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
-            $product = Product::where('id', $id)->first();
+        if ($this->repository->canDelete($id)) {
+            $productId = Product::where('id', $product)->first();
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
-            return redirect(route('products.edit', $product->id));
+            return redirect(route('products.edit', $productId->id));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));

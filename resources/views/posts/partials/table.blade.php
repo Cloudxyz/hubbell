@@ -44,6 +44,15 @@
                                     @endif
                                 </td>
 
+                                <!-- images -->
+                                <td>
+                                    @if($row->images())
+                                        @foreach($row->images as $image)
+                                            <img src="{{ asset(getUrlPath($image['file_url'], 'tiny')) }}" alt="">
+                                        @endforeach
+                                    @endif
+                                </td>
+
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [

@@ -17,27 +17,32 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'is_enabled'
+        'is_enabled',
+        'password'
     ];
     protected $hidden = [
         'password',
         'remember_token'
     ];
 
-    public function roles() {
+    public function roles()
+    {
         return $this->belongsToMany('App\Models\Role', 'user_has_roles');
     }
 
-    public function notifications() {
+    public function notifications()
+    {
         return $this->hasMany('App\Models\Notification');
     }
 
-    public function isSuper() {
-        $hasRole = !! $this->roles()->where('role_id', config('constants.roles.super'))->count();
+    public function isSuper()
+    {
+        $hasRole = !!$this->roles()->where('role_id', config('constants.roles.super'))->count();
         return $hasRole;
     }
 
-    public function myLists(){
+    public function myLists()
+    {
         return $this->hasMany('App\Models\MyList');
     }
 }

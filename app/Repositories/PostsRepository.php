@@ -4,9 +4,13 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Models\Post;
+use App\Models\{
+    Post,
+    Image
+};
 use App\Repositories\PostsRepositoryInterface;
 use App\Validations\PostsValidations;
+use App\Helpers\ImagesHelper;
 
 class PostsRepository implements PostsRepositoryInterface
 {
@@ -65,7 +69,7 @@ class PostsRepository implements PostsRepositoryInterface
         if (!empty($request->slug)) {
             $slug = $request->slug;
         } else {
-            $slug = deleteAccents($request->name);
+            $slug = deleteAccents($request->title);
         }
 
         $requestData = [
@@ -81,6 +85,35 @@ class PostsRepository implements PostsRepositoryInterface
 
         if ($post->save()) {
             $post->tags()->sync($request->tags_ids);
+
+            $currentImages = json_decode($request->sort_files);
+            array_multisort(array_column($currentImages, "order"), SORT_ASC, $currentImages);
+            $limitOrder = 1;
+
+            foreach ($currentImages as $index => $currentImage) {
+                $getImage = Image::where('id', $currentImage->id)->first();
+                $getImage->order = $limitOrder++;
+                $getImage->save();
+            }
+
+            if ($request->hasFile('images')) {
+
+                foreach ($request->images as $img) {
+                    $imgData = ImagesHelper::saveFile($img, 'images/posts');
+                    $image = new Image;
+                    $image->slug = $imgData['slug'];
+                    $image->extension = $imgData['extension'];
+                    $image->file_original_name = $imgData['file_original_name'];
+                    $image->file_name = $imgData['file_name'];
+                    $image->file_path = $imgData['file_path'];
+                    $image->file_url = $imgData['file_url'];
+                    $image->order = $limitOrder++;
+
+                    if ($image->save()) {
+                        $post->images()->save($image);
+                    }
+                }
+            }
         };
 
         return $post;

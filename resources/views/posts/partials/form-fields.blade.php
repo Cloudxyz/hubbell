@@ -21,7 +21,7 @@
 
         <!-- short_description -->
         @include('components.form.textarea', [
-            'group' => 'product',
+            'group' => 'post',
             'label' => __('Short Description'),
             'name' => 'short_description',
             'value' => $row->short_description
@@ -29,7 +29,7 @@
 
         <!-- long_description -->
         @include('components.form.textarea', [
-            'group' => 'product',
+            'group' => 'post',
             'label' => __('Long Description'),
             'name' => 'long_description',
             'value' => $row->long_description
@@ -37,7 +37,7 @@
 
         <!-- tags -->
         @include('components.form.fast-select', [
-            'group' => 'product',
+            'group' => 'post',
             'label' => __('Tags'),
             'multiple' => true,
             'name' => 'tags_ids',
@@ -48,7 +48,7 @@
 
         <!-- is_feature -->
         @include('components.form.checkbox', [
-            'group' => 'user',
+            'group' => 'post',
             'label' => __('Feature'),
             'name' => 'is_feature',
             'value' => 1,
@@ -57,11 +57,23 @@
 
         <!-- is_active -->
         @include('components.form.checkbox', [
-            'group' => 'user',
+            'group' => 'post',
             'label' => __('Active'),
             'name' => 'is_active',
             'value' => 1,
             'default' => $row->is_active,
+        ])
+
+        <!-- images -->
+        @include('components.form.image', [
+            'group' => 'post',
+            'label' => __('Images'),
+            'name' => 'images',
+            'isMultiple' => true,
+            'isImage' => true,
+            'modelId' => $row->id,
+            'modelType' => 'posts',
+            'files' => $row->images()->get(),
         ])
 
     </div>

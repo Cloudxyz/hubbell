@@ -21,7 +21,7 @@
 
 
     <div class="container app-container-sm">
-        <form action="{{ route('posts.store') }}" method="post">
+        <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             @include('posts.partials.form', ['row' => $post])
         </form>

@@ -25,7 +25,7 @@
 
 @section('main-content')
     <div class="container app-container-sm">
-        <form action="{{ route('posts.update', [$post->id]) }}" method="post">
+        <form action="{{ route('posts.update', [$post->id]) }}" method="post" enctype="multipart/form-data">
             @csrf
             @include('posts.partials.form', [
                 'row' => $post

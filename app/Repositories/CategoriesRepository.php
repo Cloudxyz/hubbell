@@ -34,7 +34,7 @@ class CategoriesRepository implements CategoriesRepositoryInterface
             $query = Category::query();
         }
 
-        $query->orderBy('name', 'asc');
+        $query->orderBy('level_id', 'asc');
 
         if ($shouldPaginate) {
             $result = $query->paginate(config('constants.pagination.per-page'));

@@ -105,6 +105,50 @@
                         </li>
                     @endif
 
+                    @if ($_current_role->isAllowed('import', 'heading-menu'))
+                        <li>
+                            <div>
+                                <div>
+                                    <label class="toggle" for="dropdownMenuBooking">
+                                        {{ __('Imports') }}
+                                    </label>
+                                    <a href="#" class="link-menu">
+                                        <i class="nav-icon mr-2 i-Upload icon-color"></i>
+                                        {{ __('Imports') }}
+                                    </a>
+                                    <!-- dropdown menu -->
+                                    <input type="checkbox" id="dropdownMenuBooking">
+                                    <ul>
+                                        @if ($_current_role->isAllowed('import', 'heading-menu'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('users.import') }}">
+                                                    <span class="item-name">{{ __('Users') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if ($_current_role->isAllowed('import', 'heading-menu'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('categories.import') }}">
+                                                    <span class="item-name">{{ __('Categories') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if ($_current_role->isAllowed('import', 'heading-menu'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('products.import') }}">
+                                                    <span class="item-name">{{ __('Products') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+
                     @if ($_current_role->isAllowed('settings', 'heading-menu'))
                         <li>
                             <div>

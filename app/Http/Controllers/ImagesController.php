@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{ Product, Category, Image };
+use App\Models\{Product, Category, Post, Image};
 use App\Helpers\ImagesHelper;
 
 class ImagesController extends Controller
@@ -11,12 +11,15 @@ class ImagesController extends Controller
 
     public function destroy(Request $request, $modelId, $id, $type = '')
     {
-        if($type == 'products'){
+        if ($type == 'products') {
             $model = Product::where('id', $modelId)->first();
             $route = 'products.edit';
-        }else{
+        } else if ($type == 'categories') {
             $model = Category::where('id', $modelId)->first();
             $route = 'categories.edit';
+        } else {
+            $model = Post::where('id', $modelId)->first();
+            $route = 'posts.edit';
         }
 
         $image = Image::where('id', $id)->first();
